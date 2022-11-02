@@ -47,14 +47,19 @@ int main() {
 
 void detectAndDisplay(Mat frame) {
 
+	//Convert image to grayscale, and increase contrast. Better for detection
 	Mat grayscaleFrame;
 	cvtColor(frame, grayscaleFrame, COLOR_BGR2GRAY);
 	equalizeHist(grayscaleFrame, grayscaleFrame);
 
+	//Create vector of rectangles to store bounding box of detected faces
 	vector<Rect> faces;
 	vector<Rect> facesSide;
 
+	//apply the pre-trained Haar cascade classifier algorithm for front face
 	faceCascade.detectMultiScale(grayscaleFrame, faces);
+
+	//apply the pre-trained Haar cascade classifier algorithm for side face
 	//faceCascadeSide.detectMultiScale(grayscaleFrame, facesSide);
 
 	for (int i = 0; i < faces.size(); i++)
@@ -67,7 +72,7 @@ void detectAndDisplay(Mat frame) {
 		
 
 		rectangle(frame, faces[i].tl(), faces[i].br(), Scalar(0, 0, 255), 2);
-		Point center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].height / 2);
+		//Point center(faces[i].x + faces[i].width / 2, faces[i].y + faces[i].height / 2);
 		//ellipse(frame, center, Size(faces[i].width / 2, faces[i].height / 2), 0, 0, 360, Scalar(255, 0, 255), 4);
 	}
 	imshow("Frame", frame);
